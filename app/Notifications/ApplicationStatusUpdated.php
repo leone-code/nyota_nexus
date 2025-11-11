@@ -47,3 +47,4 @@ class ApplicationStatusUpdated extends Notification implements ShouldQueue
 
 
 
+
