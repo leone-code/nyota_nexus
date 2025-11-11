@@ -4,16 +4,21 @@ import { type BreadcrumbItem } from "@/types";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+interface Ward {
+  id: number;
+  ward_name: string;
+}
+
 const breadcrumbs: BreadcrumbItem[] = [
   { title: "Fund Allocations", href: "/fund-allocations" },
   { title: "Create Allocation", href: "/fund-allocations/create" },
 ];
 
 export default function Create() {
-  const [wards, setWards] = useState<any[]>([]);
+  const [wards, setWards] = useState<Ward[]>([]);
 
   useEffect(() => {
-    axios.get("/api/wards").then((res) => {
+    axios.get<Ward[]>("/api/wards").then((res) => {
       setWards(res.data);
     });
   }, []);
@@ -23,10 +28,10 @@ export default function Create() {
     ward: "",
     amount_allocated: "",
     purpose: "",
-    allocation_date: new Date().toISOString().split('T')[0],
+    allocation_date: new Date().toISOString().split("T")[0],
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     post("/fund-allocations");
   };
@@ -35,7 +40,7 @@ export default function Create() {
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="Create Fund Allocation" />
 
-<div className="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 rounded-lg shadow p-6">
+      <div className="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 rounded-lg shadow p-6">
         <h2 className="text-2xl font-semibold mb-4">Create New Fund Allocation</h2>
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -119,10 +124,3 @@ export default function Create() {
     </AppLayout>
   );
 }
-
-
-
-
-
-
-

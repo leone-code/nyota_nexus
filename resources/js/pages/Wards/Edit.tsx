@@ -4,6 +4,11 @@ import { type BreadcrumbItem } from "@/types";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+interface User {
+  id: number;
+  name: string;
+}
+
 interface Ward {
   id: number;
   ward_name: string;
@@ -18,12 +23,14 @@ interface Props {
 }
 
 export default function Edit({ ward }: Props) {
-  const [users, setUsers] = useState<any[]>([]);
+  // ✅ Typed users array
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    axios.get("/api/users").then((res) => {
-      setUsers(res.data);
-    }).catch(() => {});
+    axios
+      .get<User[]>("/api/users")
+      .then((res) => setUsers(res.data))
+      .catch(() => {});
   }, []);
 
   const { data, setData, put, processing, errors } = useForm({
@@ -34,7 +41,7 @@ export default function Edit({ ward }: Props) {
     description: ward.description || "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     put(`/wards/${ward.id}`);
   };
@@ -52,6 +59,7 @@ export default function Edit({ ward }: Props) {
         <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Edit Ward</h2>
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Ward Name */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Ward Name *</label>
             <input
@@ -64,6 +72,7 @@ export default function Edit({ ward }: Props) {
             {errors.ward_name && <div className="text-red-600 dark:text-red-400 text-sm mt-1">{errors.ward_name}</div>}
           </div>
 
+          {/* County Name */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">County Name *</label>
             <input
@@ -76,6 +85,7 @@ export default function Edit({ ward }: Props) {
             {errors.county_name && <div className="text-red-600 dark:text-red-400 text-sm mt-1">{errors.county_name}</div>}
           </div>
 
+          {/* Ward Code */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Ward Code *</label>
             <input
@@ -88,6 +98,7 @@ export default function Edit({ ward }: Props) {
             {errors.ward_code && <div className="text-red-600 dark:text-red-400 text-sm mt-1">{errors.ward_code}</div>}
           </div>
 
+          {/* Ward Officer */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Ward Officer</label>
             <select
@@ -105,6 +116,7 @@ export default function Edit({ ward }: Props) {
             {errors.ward_officer_id && <div className="text-red-600 dark:text-red-400 text-sm mt-1">{errors.ward_officer_id}</div>}
           </div>
 
+          {/* Description */}
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description</label>
             <textarea
@@ -116,6 +128,7 @@ export default function Edit({ ward }: Props) {
             {errors.description && <div className="text-red-600 dark:text-red-400 text-sm mt-1">{errors.description}</div>}
           </div>
 
+          {/* Submit */}
           <div className="md:col-span-2 text-right mt-4">
             <button
               type="submit"
@@ -130,4 +143,3 @@ export default function Edit({ ward }: Props) {
     </AppLayout>
   );
 }
-

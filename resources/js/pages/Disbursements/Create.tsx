@@ -4,19 +4,31 @@ import { type BreadcrumbItem } from "@/types";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+interface Application {
+  id: number;
+  business_type: string;
+  requested_amount: number;
+}
+
+interface Ward {
+  id: number;
+  ward_name: string;
+  county_name: string;
+}
+
 const breadcrumbs: BreadcrumbItem[] = [
   { title: "Disbursements", href: "/disbursements" },
   { title: "Create Disbursement", href: "/disbursements/create" },
 ];
 
 export default function Create() {
-  const [applications, setApplications] = useState<any[]>([]);
-  const [wards, setWards] = useState<any[]>([]);
+  const [applications, setApplications] = useState<Application[]>([]);
+  const [wards, setWards] = useState<Ward[]>([]);
 
   useEffect(() => {
     Promise.all([
-      axios.get("/api/applications"),
-      axios.get("/api/wards"),
+      axios.get<Application[]>("/api/applications"),
+      axios.get<Ward[]>("/api/wards"),
     ]).then(([appsRes, wardsRes]) => {
       setApplications(appsRes.data);
       setWards(wardsRes.data);
@@ -30,7 +42,7 @@ export default function Create() {
     disbursement_notes: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     post("/disbursements");
   };
@@ -39,7 +51,7 @@ export default function Create() {
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="Create Disbursement" />
 
-<div className="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 rounded-lg shadow p-6">
+      <div className="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 rounded-lg shadow p-6">
         <h2 className="text-2xl font-semibold mb-4">Create New Disbursement</h2>
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -118,10 +130,3 @@ export default function Create() {
     </AppLayout>
   );
 }
-
-
-
-
-
-
-

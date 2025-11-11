@@ -4,18 +4,27 @@ import { type BreadcrumbItem } from "@/types";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+interface User {
+  id: number;
+  name: string;
+}
+
 const breadcrumbs: BreadcrumbItem[] = [
   { title: "Wards", href: "/wards" },
   { title: "Create Ward", href: "/wards/create" },
 ];
 
 export default function Create() {
-  const [users, setUsers] = useState<any[]>([]);
+  // ✅ Typed users array
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    axios.get("/api/users").then((res) => {
-      setUsers(res.data);
-    }).catch(() => {});
+    axios
+      .get<User[]>("/api/users")
+      .then((res) => {
+        setUsers(res.data);
+      })
+      .catch(() => {});
   }, []);
 
   const { data, setData, post, processing, errors } = useForm({
@@ -26,7 +35,7 @@ export default function Create() {
     description: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     post("/wards");
   };
@@ -36,11 +45,16 @@ export default function Create() {
       <Head title="Create Ward" />
 
       <div className="container mx-auto mt-6 p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
-        <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Create New Ward</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
+          Create New Ward
+        </h2>
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Ward Name */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Ward Name *</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Ward Name *
+            </label>
             <input
               type="text"
               value={data.ward_name}
@@ -48,11 +62,18 @@ export default function Create() {
               className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
               required
             />
-            {errors.ward_name && <div className="text-red-600 dark:text-red-400 text-sm mt-1">{errors.ward_name}</div>}
+            {errors.ward_name && (
+              <div className="text-red-600 dark:text-red-400 text-sm mt-1">
+                {errors.ward_name}
+              </div>
+            )}
           </div>
 
+          {/* County Name */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">County Name *</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              County Name *
+            </label>
             <input
               type="text"
               value={data.county_name}
@@ -60,11 +81,18 @@ export default function Create() {
               className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
               required
             />
-            {errors.county_name && <div className="text-red-600 dark:text-red-400 text-sm mt-1">{errors.county_name}</div>}
+            {errors.county_name && (
+              <div className="text-red-600 dark:text-red-400 text-sm mt-1">
+                {errors.county_name}
+              </div>
+            )}
           </div>
 
+          {/* Ward Code */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Ward Code *</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Ward Code *
+            </label>
             <input
               type="text"
               value={data.ward_code}
@@ -72,11 +100,18 @@ export default function Create() {
               className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
               required
             />
-            {errors.ward_code && <div className="text-red-600 dark:text-red-400 text-sm mt-1">{errors.ward_code}</div>}
+            {errors.ward_code && (
+              <div className="text-red-600 dark:text-red-400 text-sm mt-1">
+                {errors.ward_code}
+              </div>
+            )}
           </div>
 
+          {/* Ward Officer */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Ward Officer</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Ward Officer
+            </label>
             <select
               value={data.ward_officer_id}
               onChange={(e) => setData("ward_officer_id", e.target.value)}
@@ -89,20 +124,32 @@ export default function Create() {
                 </option>
               ))}
             </select>
-            {errors.ward_officer_id && <div className="text-red-600 dark:text-red-400 text-sm mt-1">{errors.ward_officer_id}</div>}
+            {errors.ward_officer_id && (
+              <div className="text-red-600 dark:text-red-400 text-sm mt-1">
+                {errors.ward_officer_id}
+              </div>
+            )}
           </div>
 
+          {/* Description */}
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Description
+            </label>
             <textarea
               value={data.description}
               onChange={(e) => setData("description", e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
               rows={3}
             ></textarea>
-            {errors.description && <div className="text-red-600 dark:text-red-400 text-sm mt-1">{errors.description}</div>}
+            {errors.description && (
+              <div className="text-red-600 dark:text-red-400 text-sm mt-1">
+                {errors.description}
+              </div>
+            )}
           </div>
 
+          {/* Submit */}
           <div className="md:col-span-2 text-right mt-4">
             <button
               type="submit"
@@ -117,4 +164,3 @@ export default function Create() {
     </AppLayout>
   );
 }
-
