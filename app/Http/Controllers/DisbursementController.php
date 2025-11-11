@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Disbursement;
-use App\Models\Application;
-use App\Models\Ward;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;

@@ -13,14 +13,10 @@ class Disbursement extends Model
         'application_id',
         'ward_id',
         'amount',
-        'status',
         'disbursement_notes',
         'requested_by',
-        'approved_by',
+        'status',
         'requested_at',
-        'approved_at',
-        'disbursed_at',
-        'transaction_reference',
     ];
 
     // Relationships

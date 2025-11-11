@@ -4,16 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Ward;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 class WardController extends Controller
 {
     public function index()
     {
-        $wards = Ward::with('officer')->get();
-        return Inertia::render('Wards/Index', [
-            'wards' => $wards,
-        ]);
+        return response()->json(Ward::with('officer')->get());
     }
 
     public function store(Request $request)
@@ -26,40 +22,25 @@ class WardController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        Ward::create($validated);
+        $ward = Ward::create($validated);
 
-        return redirect()->route('wards.index')
-            ->with('success', 'Ward created successfully');
+        return response()->json(['message' => 'Ward created successfully', 'ward' => $ward]);
     }
 
     public function show(Ward $ward)
     {
-        $ward->load('officer', 'applications');
-        return Inertia::render('Wards/Show', [
-            'ward' => $ward,
-        ]);
+        return response()->json($ward->load('officer', 'applications'));
     }
 
     public function update(Request $request, Ward $ward)
     {
-        $validated = $request->validate([
-            'ward_name' => 'sometimes|string',
-            'county_name' => 'sometimes|string',
-            'ward_code' => 'sometimes|unique:wards,ward_code,' . $ward->id,
-            'ward_officer_id' => 'nullable|exists:users,id',
-            'description' => 'nullable|string',
-        ]);
-
-        $ward->update($validated);
-
-        return redirect()->route('wards.show', $ward)
-            ->with('success', 'Ward updated successfully');
+        $ward->update($request->all());
+        return response()->json(['message' => 'Ward updated successfully']);
     }
 
     public function destroy(Ward $ward)
     {
         $ward->delete();
-        return redirect()->route('wards.index')
-            ->with('success', 'Ward deleted successfully');
+        return response()->json(['message' => 'Ward deleted']);
     }
 }

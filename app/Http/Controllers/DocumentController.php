@@ -12,7 +12,7 @@ class DocumentController extends Controller
     {
         $validated = $request->validate([
             'application_id' => 'required|exists:applications,id',
-            'file' => 'required|file|max:5120', // 5MB max
+            'file_name' => 'required|file|max:5120', // 5MB max
             'doc_type' => 'required|in:id_card,certificate,proposal,other',
         ]);
 
