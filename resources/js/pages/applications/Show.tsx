@@ -120,7 +120,7 @@ export default function Show({ application }: Props) {
                 <p><strong>Requested Amount:</strong> Ksh {application.requested_amount.toLocaleString()}</p>
                 <div>
                   <strong>Business Plan:</strong>
-                  <p className="mt-2 p-3 bg-gray-50 rounded">{application.business_plan}</p>
+                  <p className="mt-2 p-3 bg-gray-50 text-gray-500 rounded">{application.business_plan}</p>
                 </div>
               </div>
             </div>

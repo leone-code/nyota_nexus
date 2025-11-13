@@ -74,15 +74,15 @@ export default function Dashboard({
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <div className="bg-white rounded-lg shadow p-6">
-                        <h3 className="text-lg font-semibold mb-4">Fund Allocations</h3>
+                        <h3 className="text-lg font-semibold text-gray-600 mb-4">Fund Allocations</h3>
                         <div className="space-y-2">
                             <div className="flex justify-between">
                                 <span className="text-gray-600">Total Allocated:</span>
-                                <span className="font-semibold">Ksh {total_allocations.toLocaleString()}</span>
+                                <span className="font-semibold text-gray-600">Ksh {total_allocations.toLocaleString()}</span>
                             </div>
                             <div className="flex justify-between">
                                 <span className="text-gray-600">Total Utilized:</span>
-                                <span className="font-semibold">Ksh {total_utilized.toLocaleString()}</span>
+                                <span className="font-semibold text-gray-600">Ksh {total_utilized.toLocaleString()}</span>
                             </div>
                             <div className="flex justify-between border-t pt-2">
                                 <span className="text-gray-600">Balance:</span>
@@ -96,7 +96,7 @@ export default function Dashboard({
                         </Link>
                     </div>
 
-                    <div className="bg-white rounded-lg shadow p-6">
+                    <div className="bg-white rounded-lg shadow text-gray-600 p-6">
                         <h3 className="text-lg font-semibold mb-4">Disbursements</h3>
                         <div className="space-y-2">
                             <p className="text-gray-600">
@@ -110,23 +110,23 @@ export default function Dashboard({
                 </div>
 
                 <div className="bg-white rounded-lg shadow p-6">
-                    <h3 className="text-lg font-semibold mb-4">Quick Actions</h3>
+                    <h3 className="text-gray-600 font-semibold mb-4">Quick Actions</h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <Link
                             href="/applications/create"
-                            className="btn btn-primary"
+                            className="btn btn-secondary text-blue-600"
                         >
                             + New Application
                         </Link>
                         <Link
                             href="/disbursements/create"
-                            className="btn btn-success"
+                            className="btn btn-success text-green-600"
                         >
                             + New Disbursement
                         </Link>
                         <Link
                             href="/fund-allocations/create"
-                            className="btn btn-info"
+                            className="btn btn-info text-purple-600"
                         >
                             + New Fund Allocation
                         </Link>
