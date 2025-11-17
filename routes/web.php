@@ -33,7 +33,7 @@ Route::get('/api/applications', function () {
 });
 
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('dashboard', function () {
         $stats = [
             'total_applications' => \App\Models\Application::count(),

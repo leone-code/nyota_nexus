@@ -38,6 +38,7 @@ export default function Index({ applications: apps }: Props) {
               <th className="py-2 px-4 border-b">Business Type</th>
               <th className="py-2 px-4 border-b">Status</th>
               <th className="py-2 px-4 border-b">Requested Amount</th>
+              <th className="py-2 px-4 border-b">status</th>
             </tr>
           </thead>
           <tbody>
@@ -49,6 +50,14 @@ export default function Index({ applications: apps }: Props) {
                 <td className="py-2 px-4 border-b">{application.business_type}</td>
                 <td className="py-2 px-4 border-b">{application.status}</td>
                 <td className="py-2 px-4 border-b">{application.requested_amount.toLocaleString()}</td>
+                <td className="py-2 px-4 border-b">
+                  <Link
+                    href={applications.show(application.id).url}
+                    className="text-blue-600 hover:underline"
+                  >
+                    View
+                  </Link>
+                </td> 
               </tr>
             ))}
           </tbody>

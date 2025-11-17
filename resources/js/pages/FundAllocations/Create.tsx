@@ -65,11 +65,11 @@ export default function Create() {
               id="ward" 
               value={data.ward}
               onChange={(e) => setData("ward", e.target.value)}
-              className="w-full p-2 border border-gray-300 text-gray-700 rounded"
+              className="w-full p-2 border border-gray-300 text-gray-700m  rounded"
             >
               <option value="">Select a ward</option>
               {wards.map((ward) => (        
-                <option key={ward.id} value={ward.ward_name}>  
+                <option key={ward.id} value={ward.id}>  
                   {ward.ward_name}
                 </option> 
               ))}

@@ -136,7 +136,7 @@ export default function Edit({ fundAllocation }: Props) {
             <select
               value={data.status}
               onChange={(e) => setData("status", e.target.value)}
-              className="form-control w-full"
+              className="form-control w-full text-gray-700"
               required
             >
               <option value="active">Active</option>
