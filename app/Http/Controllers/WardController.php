@@ -9,7 +9,14 @@ class WardController extends Controller
 {
     public function index()
     {
-        return response()->json(Ward::with('officer')->get());
+        $wards = Ward::with('officer')->get();
+
+        $wards->each(function ($ward) {
+            $ward->applications_count = $ward->applications()->count();
+        });
+        return inertia('Wards/Index', [
+            'wards' => $wards,
+        ]);
     }
 
     public function store(Request $request)
@@ -21,10 +28,9 @@ class WardController extends Controller
             'ward_officer_id' => 'nullable|exists:users,id',
             'description' => 'nullable|string',
         ]);
-
-        $ward = Ward::create($validated);
-
-        return response()->json(['message' => 'Ward created successfully', 'ward' => $ward]);
+        Ward::create($validated);
+        return redirect()->route('wards.index')
+            ->with('success', 'Ward created successfully');
     }
 
     public function show(Ward $ward)

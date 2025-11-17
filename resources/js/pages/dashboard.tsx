@@ -1,6 +1,7 @@
 import AppLayout from '@/layouts/app-layout'; //a shared page wrapper. Ensures consistent layout across pages
 import { dashboard } from '@/routes';
 import applications from '@/routes/applications';
+import wards from '@/routes/wards';
 import { type BreadcrumbItem } from '@/types'; //type definition for breadcrumb items
 import { Head, Link } from '@inertiajs/react';
 
@@ -61,12 +62,15 @@ export default function Dashboard({
                     <div className="bg-white rounded-lg shadow p-6">
                         <h3 className="text-lg font-semibold text-gray-600 mb-2">Approved Applications</h3>
                         <p className="text-3xl font-bold text-green-600">{approved_applications}</p>
+                        <Link href={applications.index().url} className="text-sm text-green-500 hover:underline mt-2 inline-block">
+                            View Approved →
+                        </Link>
                     </div>
 
                     <div className="bg-white rounded-lg shadow p-6">
                         <h3 className="text-lg font-semibold text-gray-600 mb-2">Total Wards</h3>
                         <p className="text-3xl font-bold text-purple-600">{total_wards}</p>
-                        <Link href="/wards" className="text-sm text-purple-500 hover:underline mt-2 inline-block">
+                        <Link href={wards.index().url} className="text-sm text-purple-500 hover:underline mt-2 inline-block">
                             Manage Wards →
                         </Link>
                     </div>

@@ -30,85 +30,38 @@ export default function Index({ allocations }: Props) {
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="Fund Allocations" />
-
-      <div className="container mt-4">
-        <div className="d-flex justify-content-between align-items-center mb-3">
-          <h3 className="fw-bold">Fund Allocations</h3>
-          <Link href="/fund-allocations/create" className="btn btn-success">
-            + New Allocation
-          </Link>
-        </div>
-
-        {allocations.length === 0 && (
-          <div className="alert alert-warning">No fund allocations found.</div>
-        )}
-
-        {allocations.length > 0 && (
-          <div className="table-responsive">
-            <table className="table table-bordered table-striped align-middle">
-              <thead className="table-success">
-                <tr>
-                  <th>#</th>
-                  <th>County</th>
-                  <th>Ward</th>
-                  <th>Amount Allocated</th>
-                  <th>Amount Utilized</th>
-                  <th>Balance</th>
-                  <th>Status</th>
-                  <th>Allocation Date</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {allocations.map((allocation, index) => {
-                  const balance = allocation.amount_allocated - allocation.amount_utilized;
-                  return (
-                    <tr key={allocation.id}>
-                      <td>{index + 1}</td>
-                      <td>{allocation.county}</td>
-                      <td>{allocation.ward?.ward_name || "All Wards"}</td>
-                      <td>Ksh {allocation.amount_allocated.toLocaleString()}</td>
-                      <td>Ksh {allocation.amount_utilized.toLocaleString()}</td>
-                      <td>
-                        <span className={balance < 0 ? "text-danger" : ""}>
-                          Ksh {balance.toLocaleString()}
-                        </span>
-                      </td>
-                      <td>
-                        <span
-                          className={`badge ${
-                            allocation.status === "active"
-                              ? "bg-success"
-                              : allocation.status === "completed"
-                              ? "bg-info"
-                              : "bg-secondary"
-                          }`}
-                        >
-                          {allocation.status}
-                        </span>
-                      </td>
-                      <td>{new Date(allocation.allocation_date).toLocaleDateString()}</td>
-                      <td>
-                        <Link
-                          href={`/fund-allocations/${allocation.id}`}
-                          className="btn btn-sm btn-outline-primary me-2"
-                        >
-                          View
-                        </Link>
-                        <Link
-                          href={`/fund-allocations/${allocation.id}/edit`}
-                          className="btn btn-sm btn-outline-secondary"
-                        >
-                          Edit
-                        </Link>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        )}
+      <div className="container mx-auto mt-4 p-6 bg-white rounded-lg shadow text-gray-800"> 
+        <h1 className="text-3xl font-bold mb-6">Fund Allocations</h1>
+        <table className="min-w-full bg-white border border-gray-200">
+          <thead> 
+            <tr>
+              <th className="py-2 px-4 border-b">ID</th>
+              <th className="py-2 px-4 border-b">County</th>
+              <th className="py-2 px-4 border-b">Ward</th>
+              <th className="py-2 px-4 border-b">Amount Allocated</th>
+              <th className="py-2 px-4 border-b">Amount Utilized</th>
+              <th className="py-2 px-4 border-b">Purpose</th> 
+              <th className="py-2 px-4 border-b">Allocation Date</th>
+              <th className="py-2 px-4 border-b">Status</th>
+              <th className="py-2 px-4 border-b">Admin</th>
+            </tr> 
+          </thead>
+          <tbody>
+            {allocations.map((allocation) => (
+              <tr key={allocation.id}>
+                <td className="py-2 px-4 border-b">{allocation.id}</td>
+                <td className="py-2 px-4 border-b">{allocation.county}</td>
+                <td className="py-2 px-4 border-b">{allocation.ward?.ward_name || "N/A"}</td>
+                <td className="py-2 px-4 border-b">{allocation.amount_allocated.toLocaleString()}</td>
+                <td className="py-2 px-4 border-b">{allocation.amount_utilized.toLocaleString()}</td>
+                <td className="py-2 px-4 border-b">{allocation.purpose || "N/A"}</td>
+                <td className="py-2 px-4 border-b">{new Date(allocation.allocation_date).toLocaleDateString()}</td>
+                <td className="py-2 px-4 border-b">{allocation.status}</td>
+                <td className="py-2 px-4 border-b">{allocation.admin?.name || "N/A"}</td>
+              </tr> 
+            ))}
+          </tbody>
+        </table>
       </div>
     </AppLayout>
   );

@@ -27,68 +27,32 @@ export default function Index({ applications: apps }: Props) {
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="Applications" />
-
-      <div className="container mt-4">
-        <div className="d-flex justify-content-between align-items-center mb-3">
-          <h3 className="fw-bold">Applications</h3>
-          <Link
-            href="/applications/create"
-            className="btn btn-success"
-          >
-            + New Application
-          </Link>
-        </div>
-
-        {apps.length === 0 && (
-          <div className="alert alert-warning">No applications found.</div>
-        )}
-
-        {apps.length > 0 && (
-          <div className="row g-4">
-            {apps.map((app) => (
-              <div key={app.id} className="col-12 col-md-6 col-lg-4">
-                <div className="card h-100 shadow-sm">
-                  <div className="card-body d-flex flex-column">
-                    <h5 className="card-title fw-bold mb-2">{app.user?.name || "N/A"}</h5>
-                    <p className="mb-1"><span className="fw-semibold">ID:</span> {app.id}</p>
-                    <p className="mb-1"><span className="fw-semibold">Ward:</span> {app.ward?.ward_name || "N/A"}</p>
-                    <p className="mb-1"><span className="fw-semibold">Business Type:</span> {app.business_type}</p>
-                    <p className="mb-1">
-                      <span className="fw-semibold">Status:</span>{" "}
-                      <span
-                        className={`badge ${
-                          app.status === "approved"
-                            ? "bg-success"
-                            : app.status === "rejected"
-                            ? "bg-danger"
-                            : "bg-warning text-dark"
-                        }`}
-                      >
-                        {app.status || "Pending"}
-                      </span>
-                    </p>
-                    <p className="mb-3"><span className="fw-semibold">Requested Amount:</span> Ksh {app.requested_amount?.toLocaleString()}</p>
-                    
-                    <div className="mt-auto d-flex gap-2">
-                      <Link
-                        href={applications.show({ application: app.id }).url}
-                        className="btn btn-sm btn-outline-primary flex-fill"
-                      >
-                        View
-                      </Link>
-                      <Link
-                        href={`/applications/${app.id}/edit`}
-                        className="btn btn-sm btn-outline-secondary flex-fill"
-                      >
-                        Edit
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
+      <div className="container mx-auto mt-4 p-6 bg-white rounded-lg shadow text-gray-800">
+        <h1 className="text-3xl font-bold mb-6">Applications</h1>
+        <table className="min-w-full bg-white border border-gray-200">
+          <thead>
+            <tr>
+              <th className="py-2 px-4 border-b">ID</th>
+              <th className="py-2 px-4 border-b">Applicant Name</th>
+              <th className="py-2 px-4 border-b">Ward</th>
+              <th className="py-2 px-4 border-b">Business Type</th>
+              <th className="py-2 px-4 border-b">Status</th>
+              <th className="py-2 px-4 border-b">Requested Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {apps.map((application) => (
+              <tr key={application.id}>
+                <td className="py-2 px-4 border-b">{application.id}</td>
+                <td className="py-2 px-4 border-b">{application.user?.name || "N/A"}</td>
+                <td className="py-2 px-4 border-b">{application.ward?.ward_name || "N/A"}</td>
+                <td className="py-2 px-4 border-b">{application.business_type}</td>
+                <td className="py-2 px-4 border-b">{application.status}</td>
+                <td className="py-2 px-4 border-b">{application.requested_amount.toLocaleString()}</td>
+              </tr>
             ))}
-          </div>
-        )}
+          </tbody>
+        </table>
       </div>
     </AppLayout>
   );

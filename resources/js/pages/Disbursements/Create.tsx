@@ -50,81 +50,89 @@ export default function Create() {
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="Create Disbursement" />
-
-      <div className="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 rounded-lg shadow p-6">
-        <h2 className="text-2xl font-semibold mb-4">Create New Disbursement</h2>
-
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="form-label">Application *</label>
+      <div className="container mx-auto mt-6 p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
+        <h1 className="text-2xl font-semibold mb-4 text-green-600 dark:text-green-400">
+          Create Disbursement
+          </h1>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">  
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="application_id">
+              Application
+            </label>
             <select
+              id="application_id"
               value={data.application_id}
               onChange={(e) => setData("application_id", e.target.value)}
-              className="form-control w-full"
-              required
-            >
+              className="w-full p-2 border border-gray-300 text-gray-700 rounded"
+            > 
               <option value="">Select Application</option>
               {applications.map((app) => (
-                <option key={app.id} value={app.id}>
-                  {app.business_type} - Ksh {app.requested_amount?.toLocaleString()}
+                <option key={app.id} value={app.id}>  
+                  {app.business_type} - {app.requested_amount.toLocaleString()}
                 </option>
-              ))}
+              ))} 
             </select>
-            {errors.application_id && <div className="text-danger text-sm">{errors.application_id}</div>}
-          </div>
-
-          <div>
-            <label className="form-label">Ward *</label>
+            {errors.application_id && (
+              <p className="text-red-500 text-sm mt-1">{errors.application_id}</p>
+            )}
+          </div>  
+          <div className="mb-4">  
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="ward_id">
+              Ward    
+            </label>
             <select
+              id="ward_id"
               value={data.ward_id}
               onChange={(e) => setData("ward_id", e.target.value)}
-              className="form-control w-full"
-              required
-            >
+              className="w-full p-2 border border-gray-300 text-gray-700 rounded"
+            > 
               <option value="">Select Ward</option>
-              {wards.map((ward) => (
-                <option key={ward.id} value={ward.id}>
+              {wards.map((ward) => (  
+                <option key={ward.id} value={ward.id}>  
                   {ward.ward_name} - {ward.county_name}
-                </option>
-              ))}
+                </option> 
+              ))} 
             </select>
-            {errors.ward_id && <div className="text-danger text-sm">{errors.ward_id}</div>}
-          </div>
-
-          <div>
-            <label className="form-label">Amount (Ksh) *</label>
+            {errors.ward_id && (  
+              <p className="text-red-500 text-sm mt-1">{errors.ward_id}</p>
+            )} 
+          </div>  
+          <div className="mb-4">  
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="amount">
+              Amount
+            </label>
             <input
               type="number"
+              id="amount"
               value={data.amount}
-              onChange={(e) => setData("amount", e.target.value)}
-              className="form-control w-full"
-              min="0"
-              step="0.01"
-              required
+              onChange={(e) => setData("amount", e.target.value)} 
+              className="w-full p-2 border border-gray-300 rounded"
             />
-            {errors.amount && <div className="text-danger text-sm">{errors.amount}</div>}
-          </div>
-
-          <div className="md:col-span-2">
-            <label className="form-label">Notes</label>
+            {errors.amount && ( 
+              <p className="text-red-500 text-sm mt-1">{errors.amount}</p>
+            )} 
+          </div>    
+          <div className="mb-4">  
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="disbursement_notes">
+              Disbursement Notes  
+            </label>
             <textarea
+              id="disbursement_notes" 
               value={data.disbursement_notes}
               onChange={(e) => setData("disbursement_notes", e.target.value)}
-              className="form-control w-full"
-              rows={3}
-            ></textarea>
-            {errors.disbursement_notes && <div className="text-danger text-sm">{errors.disbursement_notes}</div>}
-          </div>
-
-          <div className="md:col-span-2 text-right mt-4">
-            <button
-              type="submit"
-              disabled={processing}
-              className="btn btn-success px-4 py-2 rounded"
-            >
-              {processing ? "Creating..." : "Create Disbursement"}
-            </button>
-          </div>
+              className="w-full p-2 border border-gray-300 rounded" 
+            />
+            {errors.disbursement_notes && ( 
+              <p className="text-red-500 text-sm mt-1">{errors.disbursement_notes}</p>  
+            )}
+          </div>  
+          <button 
+            type="submit"
+            disabled={processing}
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          >
+            Create Disbursement
+          </button>
         </form>
       </div>
     </AppLayout>

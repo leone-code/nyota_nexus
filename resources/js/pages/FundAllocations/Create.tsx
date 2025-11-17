@@ -39,86 +39,92 @@ export default function Create() {
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="Create Fund Allocation" />
-
-      <div className="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 rounded-lg shadow p-6">
-        <h2 className="text-2xl font-semibold mb-4">Create New Fund Allocation</h2>
-
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="form-label">County *</label>
+      <div className="container mx-auto mt-6 p-6 bg-white dark:bg-gray-800 rounded-lg shadow"> 
+        <h1 className="text-2xl font-semibold mb-4 text-green-600 dark:text-green-400">
+          Create Fund Allocation
+          </h1>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">  
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="county">
+              County
+            </label>
             <input
               type="text"
+              id="county"
               value={data.county}
               onChange={(e) => setData("county", e.target.value)}
-              className="form-control w-full"
-              required
+              className="w-full p-2 border border-gray-300 rounded"
             />
-            {errors.county && <div className="text-danger text-sm">{errors.county}</div>}
-          </div>
-
-          <div>
-            <label className="form-label">Ward (Optional)</label>
+            {errors.county && <p className="text-red-500 text-sm mt-1">{errors.county}</p>}
+          </div>  
+          <div className="mb-4">  
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="ward">
+              Ward  
+            </label>
             <select
+              id="ward" 
               value={data.ward}
               onChange={(e) => setData("ward", e.target.value)}
-              className="form-control w-full"
+              className="w-full p-2 border border-gray-300 text-gray-700 rounded"
             >
-              <option value="">All Wards in County</option>
-              {wards.map((ward) => (
-                <option key={ward.id} value={ward.id}>
+              <option value="">Select a ward</option>
+              {wards.map((ward) => (        
+                <option key={ward.id} value={ward.ward_name}>  
                   {ward.ward_name}
-                </option>
+                </option> 
               ))}
             </select>
-            {errors.ward && <div className="text-danger text-sm">{errors.ward}</div>}
-          </div>
-
-          <div>
-            <label className="form-label">Amount Allocated (Ksh) *</label>
-            <input
+            {errors.ward && <p className="text-red-500 text-sm mt-1">{errors.ward}</p>} 
+          </div>  
+          <div className="mb-4">  
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="amount_allocated"> 
+              Amount Allocated
+            </label>
+            <input  
               type="number"
+              id="amount_allocated"
               value={data.amount_allocated}
               onChange={(e) => setData("amount_allocated", e.target.value)}
-              className="form-control w-full"
-              min="0"
-              step="0.01"
-              required
+              className="w-full p-2 border border-gray-300 rounded"
+            />  
+            {errors.amount_allocated && (
+              <p className="text-red-500 text-sm mt-1">{errors.amount_allocated}</p>
+            )}    
+          </div>  
+          <div className="mb-4">  
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="purpose">
+              Purpose
+            </label>
+            <textarea
+              id="purpose"
+              value={data.purpose}
+              onChange={(e) => setData("purpose", e.target.value)}  
+              className="w-full p-2 border border-gray-300 rounded" 
             />
-            {errors.amount_allocated && <div className="text-danger text-sm">{errors.amount_allocated}</div>}
+            {errors.purpose && <p className="text-red-500 text-sm mt-1">{errors.purpose}</p>}
           </div>
-
-          <div>
-            <label className="form-label">Allocation Date *</label>
-            <input
+          <div className="mb-4">  
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="allocation_date">    
+              Allocation Date
+            </label>
+            <input  
               type="date"
+              id="allocation_date"
               value={data.allocation_date}
               onChange={(e) => setData("allocation_date", e.target.value)}
-              className="form-control w-full"
-              required
-            />
-            {errors.allocation_date && <div className="text-danger text-sm">{errors.allocation_date}</div>}
-          </div>
-
-          <div className="md:col-span-2">
-            <label className="form-label">Purpose</label>
-            <textarea
-              value={data.purpose}
-              onChange={(e) => setData("purpose", e.target.value)}
-              className="form-control w-full"
-              rows={3}
-            ></textarea>
-            {errors.purpose && <div className="text-danger text-sm">{errors.purpose}</div>}
-          </div>
-
-          <div className="md:col-span-2 text-right mt-4">
-            <button
-              type="submit"
-              disabled={processing}
-              className="btn btn-success px-4 py-2 rounded"
-            >
-              {processing ? "Creating..." : "Create Allocation"}
-            </button>
-          </div>
+              className="w-full p-2 border border-gray-300 rounded"
+            />  
+            {errors.allocation_date && (
+              <p className="text-red-500 text-sm mt-1">{errors.allocation_date}</p>
+            )}    
+          </div>  
+          <button 
+            type="submit" 
+            disabled={processing}
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          >
+            {processing ? "Submitting..." : "Create Allocation"}
+          </button>
         </form>
       </div>
     </AppLayout>

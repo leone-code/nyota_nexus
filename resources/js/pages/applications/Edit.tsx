@@ -70,206 +70,182 @@ export default function Edit({ application }: Props) {
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="Edit Application" />
-
-      <div className="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 rounded-lg shadow p-6">
-        <h2 className="text-2xl font-semibold mb-4">Edit Application</h2>
-
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Ward */}
-          <div>
-            <label className="form-label">Ward *</label>
+      <div className="max-w-4xl mx-auto p-6 bg-white  dark:bg-gray-800 rounded-lg shadow text-gray-800 dark:text-gray-200">
+        <h2 className="text-2xl text-green-700 font-semibold mb-6">Edit Application</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div> 
+            <label className="block  font-medium mb-1" htmlFor="ward_id">
+              Ward
+            </label>
             <select
-              name="ward_id"
-              value={data.ward_id}
-              onChange={(e) => setData("ward_id", e.target.value)}
-              className="form-control w-full"
-              required
-            >
-              <option value="">Select Ward</option>
+              id="ward_id"  
+              value={data.ward_id}  
+              onChange={(e) => setData("ward_id", Number(e.target.value))}
+              className="w-full border border-gray-300 text-gray-700  rounded px-3 py-2"
+            >   
+              <option value="">Select a ward</option>
               {wards.map((ward) => (
-                <option key={ward.id} value={ward.id}>
+                <option key={ward.id} value={ward.id}>      
                   {ward.ward_name} - {ward.county_name}
                 </option>
-              ))}
+              ))} 
             </select>
-            {errors.ward_id && <div className="text-danger text-sm">{errors.ward_id}</div>}
+            {errors.ward_id && <p className="text-red-500 text-sm mt-1">{errors.ward_id}</p>}
           </div>
-
-          {/* Date of Birth */}
-          <div>
-            <label className="form-label">Date of Birth</label>
+          <div>   
+            <label className="block text-sm  font-medium mb-1" htmlFor="date_of_birth">
+              Date of Birth
+            </label>      
             <input
               type="date"
-              name="date_of_birth"
+              id="date_of_birth"    
               value={data.date_of_birth}
-              onChange={(e) => setData("date_of_birth", e.target.value)}
-              className="form-control w-full"
+              onChange={(e) => setData("date_of_birth", e.target.value)} 
+              className="w-full border border-gray-300  rounded px-3 py-2"   
             />
-            {errors.date_of_birth && <div className="text-danger text-sm">{errors.date_of_birth}</div>}
-          </div>
-
-          {/* ID Number */}
-          <div>
-            <label className="form-label">National ID</label>
+            {errors.date_of_birth && <p className="text-red-500 text-sm mt-1">{errors.date_of_birth}</p>}
+          </div>  
+          <div>   
+            <label className="block text-sm  font-medium mb-1" htmlFor="id_number">
+              ID Number 
+            </label>      
             <input
-              type="text"
-              name="id_number"
-              value={data.id_number}
-              onChange={(e) => setData("id_number", e.target.value)}
-              className="form-control w-full"
+              type="text" 
+              id="id_number"    
+              value={data.id_number} 
+              onChange={(e) => setData("id_number", e.target.value)} 
+              className="w-full border border-gray-300  rounded px-3 py-2"   
             />
-            {errors.id_number && <div className="text-danger text-sm">{errors.id_number}</div>}
-          </div>
-
-          {/* Phone */}
-          <div>
-            <label className="form-label">Phone</label>
+            {errors.id_number && <p className="text-red-500 text-sm mt-1">{errors.id_number}</p>}
+          </div>  
+          <div>   
+            <label className="block text-sm  font-medium mb-1" htmlFor="phone">
+              Phone Number  
+            </label>      
             <input
-              type="text"
-              name="phone"
-              value={data.phone}
-              onChange={(e) => setData("phone", e.target.value)}
-              className="form-control w-full"
-            />
-            {errors.phone && <div className="text-danger text-sm">{errors.phone}</div>}
-          </div>
-
-          {/* Address */}
-          <div className="md:col-span-2">
-            <label className="form-label">Address *</label>
+              type="text" 
+              id="phone"    
+              value={data.phone} 
+              onChange={(e) => setData("phone", e.target.value)}  
+              className="w-full border border-gray-300  rounded px-3 py-2" 
+            />   
+            {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
+          </div>  
+          <div>   
+            <label className="block text-sm font-medium mb-1" htmlFor="address">
+              Address 
+            </label>      
+            <input
+              type="text" 
+              id="address"  
+              value={data.address} 
+              onChange={(e) => setData("address", e.target.value)}  
+              className="w-full border border-gray-300 rounded px-3 py-2" 
+            />   
+            {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
+          </div>  
+          <div>   
+            <label className="block text-sm font-medium mb-1" htmlFor="education_level">
+              Education Level 
+            </label>      
+            <input
+              type="text" 
+              id="education_level"  
+              value={data.education_level} 
+              onChange={(e) => setData("education_level", e.target.value)}  
+              className="w-full border border-gray-300 rounded px-3 py-2" 
+            />   
+            {errors.education_level && <p className="text-red-500 text-sm mt-1">{errors.education_level}</p>}   
+          </div>  
+          <div>   
+            <label className="block text-sm font-medium mb-1" htmlFor="institution_name"> 
+              Institution Name 
+            </label>      
+            <input
+              type="text" 
+              id="institution_name"  
+              value={data.institution_name || ""} 
+              onChange={(e) => setData("institution_name", e.target.value)}  
+              className="w-full border border-gray-300 rounded px-3 py-2" 
+            />   
+            {errors.institution_name && <p className="text-red-500 text-sm mt-1">{errors.institution_name}</p>}   
+          </div>  
+          <div>   
+            <label className="block text-sm font-medium mb-1" htmlFor="graduation_year">
+              Graduation Year 
+            </label>      
+            <input
+              type="number" 
+              id="graduation_year"  
+              value={data.graduation_year || ""} 
+              onChange={(e) => setData("graduation_year", Number(e.target.value))}  
+              className="w-full border border-gray-300 rounded px-3 py-2" 
+            />   
+            {errors.graduation_year && <p className="text-red-500 text-sm mt-1">{errors.graduation_year}</p>}   
+          </div>  
+          <div>   
+            <label className="block text-sm font-medium mb-1" htmlFor="business_type">
+              Business Type 
+            </label>      
+            <input
+              type="text" 
+              id="business_type"  
+              value={data.business_type} 
+              onChange={(e) => setData("business_type", e.target.value)}  
+              className="w-full border border-gray-300 rounded px-3 py-2" 
+            />   
+            {errors.business_type && <p className="text-red-500 text-sm mt-1">{errors.business_type}</p>}   
+          </div>  
+          <div>   
+            <label className="block text-sm font-medium mb-1" htmlFor="business_description">
+              Business Description    
+            </label>      
             <textarea
-              name="address"
-              value={data.address}
-              onChange={(e) => setData("address", e.target.value)}
-              className="form-control w-full"
-              rows={2}
-              required
-            />
-            {errors.address && <div className="text-danger text-sm">{errors.address}</div>}
-          </div>
-
-          {/* Education Level */}
-          <div>
-            <label className="form-label">Education Level *</label>
-            <select
-              name="education_level"
-              value={data.education_level}
-              onChange={(e) => setData("education_level", e.target.value)}
-              className="form-control w-full"
-              required
-            >
-              <option value="">Select Level</option>
-              <option value="Primary">Primary</option>
-              <option value="Secondary">Secondary</option>
-              <option value="Diploma">Diploma</option>
-              <option value="Bachelor">Bachelor</option>
-              <option value="Master">Master</option>
-              <option value="PhD">PhD</option>
-              <option value="Other">Other</option>
-            </select>
-            {errors.education_level && <div className="text-danger text-sm">{errors.education_level}</div>}
-          </div>
-
-          {/* Institution Name */}
-          <div>
-            <label className="form-label">Institution Name</label>
+              id="business_description" 
+              value={data.business_description} 
+              onChange={(e) => setData("business_description", e.target.value)}  
+              className="w-full border border-gray-300 rounded px-3 py-2" 
+            ></textarea>   
+            {errors.business_description && <p className="text-red-500 text-sm mt-1">{errors.business_description}</p>}   
+          </div>  
+          <div>   
+            <label className="block text-sm font-medium mb-1" htmlFor="requested_amount">
+              Requested Amount
+            </label>    
             <input
-              type="text"
-              name="institution_name"
-              value={data.institution_name}
-              onChange={(e) => setData("institution_name", e.target.value)}
-              className="form-control w-full"
-            />
-            {errors.institution_name && <div className="text-danger text-sm">{errors.institution_name}</div>}
-          </div>
-
-          {/* Graduation Year */}
-          <div>
-            <label className="form-label">Graduation Year</label>
-            <input
-              type="number"
-              name="graduation_year"
-              value={data.graduation_year}
-              onChange={(e) => setData("graduation_year", e.target.value)}
-              className="form-control w-full"
-              min="1950"
-              max={new Date().getFullYear()}
-            />
-            {errors.graduation_year && <div className="text-danger text-sm">{errors.graduation_year}</div>}
-          </div>
-
-          {/* Business Type */}
-          <div>
-            <label className="form-label">Business Type *</label>
-            <input
-              type="text"
-              name="business_type"
-              value={data.business_type}
-              onChange={(e) => setData("business_type", e.target.value)}
-              className="form-control w-full"
-              required
-            />
-            {errors.business_type && <div className="text-danger text-sm">{errors.business_type}</div>}
-          </div>
-
-          {/* Business Description */}
-          <div className="md:col-span-2">
-            <label className="form-label">Business Description *</label>
+              type="number" 
+              id="requested_amount" 
+              value={data.requested_amount} 
+              onChange={(e) => setData("requested_amount", Number(e.target.value))}   
+              className="w-full border border-gray-300 rounded px-3 py-2" 
+            />   
+            {errors.requested_amount && <p className="text-red-500 text-sm mt-1">{errors.requested_amount}</p>}   
+          </div>  
+          <div>   
+            <label className="block text-sm font-medium mb-1" htmlFor="business_plan">    
+              Business Plan   
+            </label>      
             <textarea
-              name="business_description"
-              value={data.business_description}
-              onChange={(e) => setData("business_description", e.target.value)}
-              className="form-control w-full"
-              rows={4}
-              required
-            />
-            {errors.business_description && <div className="text-danger text-sm">{errors.business_description}</div>}
-          </div>
-
-          {/* Requested Amount */}
+              id="business_plan"    
+              value={data.business_plan}  
+              onChange={(e) => setData("business_plan", e.target.value)}    
+              className="w-full border border-gray-300 rounded px-3 py-2" 
+            ></textarea>   
+            {errors.business_plan && <p className="text-red-500 text-sm mt-1">{errors.business_plan}</p>} 
+          </div>  
           <div>
-            <label className="form-label">Requested Amount (Ksh) *</label>
-            <input
-              type="number"
-              name="requested_amount"
-              value={data.requested_amount}
-              onChange={(e) => setData("requested_amount", e.target.value)}
-              className="form-control w-full"
-              min="0"
-              step="0.01"
-              required
-            />
-            {errors.requested_amount && <div className="text-danger text-sm">{errors.requested_amount}</div>}
-          </div>
-
-          {/* Business Plan */}
-          <div className="md:col-span-2">
-            <label className="form-label">Business Plan *</label>
-            <textarea
-              name="business_plan"
-              value={data.business_plan}
-              onChange={(e) => setData("business_plan", e.target.value)}
-              className="form-control w-full"
-              rows={6}
-              required
-            />
-            {errors.business_plan && <div className="text-danger text-sm">{errors.business_plan}</div>}
-          </div>
-
-          {/* Submit Button */}
-          <div className="md:col-span-2 text-right mt-4">
-            <button
+            <button 
               type="submit"
-              disabled={processing}
-              className="btn btn-primary px-4 py-2 rounded"
+              disabled={processing} 
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
             >
-              {processing ? "Updating..." : "Update Application"}
+              Update Application
             </button>
           </div>
         </form>
       </div>
     </AppLayout>
-  );
+  );  
 }
 
 

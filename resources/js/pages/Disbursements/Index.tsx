@@ -58,103 +58,65 @@ export default function Index({ disbursements }: Props) {
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="Disbursements" />
-
-      <div className="container mt-4">
-        <div className="d-flex justify-content-between align-items-center mb-3">
-          <h3 className="fw-bold">Disbursements</h3>
-          <Link href="/disbursements/create" className="btn btn-success">
-            + New Disbursement
-          </Link>
-        </div>
-
-        {disbursements.length === 0 && (
-          <div className="alert alert-warning">No disbursements found.</div>
-        )}
-
-        {disbursements.length > 0 && (
-          <div className="table-responsive">
-            <table className="table table-bordered table-striped align-middle">
-              <thead className="table-success">
-                <tr>
-                  <th>#</th>
-                  <th>Application</th>
-                  <th>Ward</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                  <th>Requested By</th>
-                  <th>Approved By</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {disbursements.map((disbursement, index) => (
-                  <tr key={disbursement.id}>
-                    <td>{index + 1}</td>
-                    <td>
-                      {disbursement.application ? (
-                        <Link href={`/applications/${disbursement.application.id}`}>
-                          {disbursement.application.business_type}
-                        </Link>
-                      ) : (
-                        "N/A"
-                      )}
-                    </td>
-                    <td>{disbursement.ward?.ward_name || "N/A"}</td>
-                    <td>Ksh {disbursement.amount.toLocaleString()}</td>
-                    <td>
-                      <span
-                        className={`badge ${
-                          disbursement.status === "disbursed"
-                            ? "bg-success"
-                            : disbursement.status === "approved"
-                            ? "bg-info"
-                            : disbursement.status === "rejected"
-                            ? "bg-danger"
-                            : "bg-warning text-dark"
-                        }`}
+      <div className="container mx-auto mt-4 p-6 bg-white rounded-lg shadow text-gray-800"> 
+        <h1 className="text-3xl font-bold mb-6">Disbursements</h1>
+        <table className="min-w-full bg-white border border-gray-200">
+          <thead> 
+            <tr>
+              <th className="py-2 px-4 border-b">ID</th>
+              <th className="py-2 px-4 border-b">Applicant Name</th>
+              <th className="py-2 px-4 border-b">Ward</th>
+              <th className="py-2 px-4 border-b">Business Type</th>
+              <th className="py-2 px-4 border-b">Amount</th>
+              <th className="py-2 px-4 border-b">Status</th>
+              <th className="py-2 px-4 border-b">Requested At</th>
+              <th className="py-2 px-4 border-b">Approved At</th>
+              <th className="py-2 px-4 border-b">Disbursed At</th>
+              <th className="py-2 px-4 border-b">Actions</th>
+            </tr> 
+          </thead>
+          <tbody>
+            {disbursements.map((disbursement) => (
+              <tr key={disbursement.id}>
+                <td className="py-2 px-4 border-b">{disbursement.id}</td>
+                <td className="py-2 px-4 border-b">{disbursement.requester?.name || "N/A"}</td>
+                <td className="py-2 px-4 border-b">{disbursement.ward?.ward_name || "N/A"}</td>
+                <td className="py-2 px-4 border-b">{disbursement.application?.business_type || "N/A"}</td>
+                <td className="py-2 px-4 border-b">{disbursement.amount.toLocaleString()}</td>
+                <td className="py-2 px-4 border-b">{disbursement.status}</td>
+                <td className="py-2 px-4 border-b">{disbursement.requested_at ? new Date(disbursement.requested_at).toLocaleDateString() : "N/A"}</td>
+                <td className="py-2 px-4 border-b">{disbursement.approved_at ? new Date(disbursement.approved_at).toLocaleDateString() : "N/A"}</td>
+                <td className="py-2 px-4 border-b">{disbursement.disbursed_at ? new Date(disbursement.disbursed_at).toLocaleDateString() : "N/A"}</td>  
+                <td className="py-2 px-4 border-b">
+                    {disbursement.status?.toLowerCase() === "pending" && (
+                    <>  
+                      <button
+                        onClick={() => handleApprove(disbursement.id)}
+                        className="bg-green-500 text-white px-3 py-1 rounded mr-2 hover:bg-green-600"
                       >
-                        {disbursement.status || "Pending"}
-                      </span>
-                    </td>
-                    <td>{disbursement.requester?.name || "N/A"}</td>
-                    <td>{disbursement.approver?.name || "N/A"}</td>
-                    <td>
-                      <div className="btn-group">
-                        {disbursement.status === "pending" && (
-                          <>
-                            <button
-                              onClick={() => handleApprove(disbursement.id)}
-                              disabled={processing}
-                              className="btn btn-sm btn-success"
-                            >
-                              Approve
-                            </button>
-                            <button
-                              onClick={() => handleReject(disbursement.id)}
-                              disabled={processing}
-                              className="btn btn-sm btn-danger"
-                            >
-                              Reject
-                            </button>
-                          </>
-                        )}
-                        {disbursement.status === "approved" && (
-                          <button
-                            onClick={() => handleDisburse(disbursement.id)}
-                            disabled={processing}
-                            className="btn btn-sm btn-primary"
-                          >
-                            Mark Disbursed
-                          </button>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+                        Approve 
+                      </button>
+                      <button
+                        onClick={() => handleReject(disbursement.id)}   
+                        className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                      > 
+                        Reject
+                      </button>
+                    </> 
+                  )}
+                  {disbursement.status === "Approved" && (
+                    <button 
+                      onClick={() => handleDisburse(disbursement.id)}
+                      className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"  
+                    >
+                      Mark as Disbursed
+                    </button> 
+                  )}
+                </td>
+              </tr> 
+            ))}
+          </tbody>
+        </table>
       </div>
     </AppLayout>
   );
